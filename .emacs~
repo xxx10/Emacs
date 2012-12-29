@@ -1,0 +1,161 @@
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(show-paren-mode t)
+ ;; Setting English Font
+(set-face-attribute
+  'default nil :font "Consolas 12")
+ 
+  ;;'(current-language-environment "UTF-8") 
+  ;; show column number on status bar
+;;
+  
+;; Chinese Font
+(dolist (charset '(kana han symbol cjk-misc bopomofo))
+    (set-fontset-font (frame-parameter nil 'font)
+                      charset
+                      (font-spec :family "新宋体" :size 15)))
+
+ 
+
+;; tab 缩进
+
+
+
+
+					  
+)
+
+(add-hook 'latex-mode-hook 'turn-on-reftex)
+(add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+(setq reftex-plug-into-auctex t)
+
+
+(custom-set-variables
+ '(TeX-engine (quote xetex))
+ '(TeX-source-correlate-method (quote synctex))
+ '(TeX-view-predicate-list nil)
+ '(TeX-view-program-list (quote (("sumatrapdf" "D:\\Software\\CTEX\\CTeX\\ctex\\bin\\SumatraPDF.exe %o"))))
+ '(TeX-view-program-selection (quote (((output-dvi style-pstricks) "dvips and start") (output-dvi "Yap") (output-pdf "sumatrapdf") (output-html "start"))))
+ ;;'(cua-mode t nil (cua-base))
+ '(preview-auto-cache-preamble nil)
+ '(preview-scale-function 1.3)
+ '(preview-transparent-color nil))
+
+;
+
+
+
+;解决emacs shell 乱码
+(setq ansi-color-for-comint-mode t)
+(customize-group 'ansi-colors)
+(kill-this-buffer);关闭customize窗口
+
+(setq column-number-mode t)
+(auto-image-file-mode)
+
+;; 在 mode-line 上显示时间。
+(setq display-time-24hr-format t)
+(setq display-time-day-and-date t)
+(setq display-time-use-mail-icon t)
+(setq display-time-interval 10)
+
+(setq inhibit-startup-message t);关闭开启画面
+(menu-bar-mode nil) ; 无菜单栏
+(tool-bar-mode -1); 无工具栏
+(scroll-bar-mode -1);无滚动条
+
+;;显示行号
+(global-linum-mode t)
+
+(setq default-directory"e:\\tsinghua\\")
+
+(setq x-select-enable-clipboard t)
+ ;;写文件的编码方式
+(set-buffer-file-coding-system 'utf-8)
+;;新建文件的编码方式
+(setq default-buffer-file-coding-system 'utf-8)
+;;终端方式的编码方式
+(set-terminal-coding-system 'utf-8)
+;;键盘输入的编码方式
+;;读取或写入文件名的编码方式
+;;(setq file-name-coding-system 'utf-8)
+
+;; get around the Ctrl+SPACE key binding for inputing method
+(global-set-key "\C-cm" 'set-mark-command)
+
+;; highlight marked region
+;;(transient-mark-mode t)
+
+;; enable syntax highlight
+;;(global-font-lock-mode t)
+
+
+
+(server-start)
+(add-hook 'LaTeX-mode-hook (lambda()
+         
+		 (setq TeX-auto-untabify t     ; remove all tabs before saving
+                      TeX-engine 'xetex       ; use xelatex default
+                      TeX-show-compilation t) ; display compilation windows
+                (TeX-global-PDF-mode t)       ; PDF mode enable, not plain
+                (imenu-add-menubar-index)
+                (define-key LaTeX-mode-map [(control tab)]  'TeX-complete-symbol)
+				;;设置c-tab自动补全
+				
+		 (add-to-list 'TeX-command-list '("XeLaTeX" "%`xelatex%(mode) -synctex=-1'  %t" TeX-run-TeX nil t))
+           (TeX-PDF-mode t)
+           (setq TeX-command-default "XeLaTeX")
+           (setq TeX-save-query  nil )
+           (setq TeX-show-compilation nil)))
+
+(load "auctex.el" nil t t)
+(load "preview-latex.el" nil t t)
+(setq TeX-auto-save t)
+(setq TeX-parse-self t)
+(setq-default TeX-master nil)
+(setq preview-scale-function 1.3)
+(setq LaTeX-math-menu-unicode t)
+(setq TeX-insert-braces nil)
+(add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
+
+;(add-to-list 'load-path "~/.emacs.d")
+;(require 'color-theme)
+;(eval-after-load "color-theme"
+;  '(progn
+;     (color-theme-initialize)
+(add-to-list 'load-path "~/.emacs.d")
+ (require 'color-theme)
+ (color-theme-initialize)
+ (load-file "~/.emacs.d/color-theme-blackboard.el")
+ (color-theme-blackboard)
+	 
+;(add-to-list 'load-path "~/.emacs.d")
+;(require 'color-theme)
+;(color-theme-initialize)
+; (color-theme-dark-blue)
+(global-set-key (kbd "RET") 'newline-and-indent)
+;;启动时最大窗口
+(run-with-idle-timer 0.0 nil 'w32-send-sys-command 61488)
+
+;; 回车缩进
+(setq c-basic-offset 4)
+;;(setq indent-tabs-mode nil)
+(setq default-tab-width 4)
+(setq tab-width 4)
+(setq tab-stop-list ())
+(setq tab-stop-list '(4 8 12 16 20 24 28 32 36 40 
+44 48 52 56 60 64 68 72 76 80 84 88 92 96))
+
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+
+ )
+
+ (add-to-list 'load-path "~/.emacs.d")
+(require 'sumatra-forward)
